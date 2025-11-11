@@ -1,21 +1,28 @@
 import React from "react";
 
-function Hover2({ children, number, to, info }) {
+function Hover2({ children, number, to, info, img, setPreview }) {
   const handleClick = () => {
     window.open(to, "_blank");
   };
 
   return (
-    <div onClick={handleClick} className="cursor-pointer">
-      <div className="group relative  transition-all duration-500 h-20 overflow-hidden">
-        <div className="flex gap-2 justify-between items-center h-full md:px-8  duration-500">
-          <div className="">
-            <div className="text-2xl md:text-4xl transition-transform duration-300 z-10 md:group-hover:translate-x-10 md:group-hover:opacity-0 md:group-hover:text-black">
+    <div
+      onClick={handleClick}
+      className="cursor-pointer"
+      onMouseEnter={(e) => setPreview({ img, x: e.clientX, y: e.clientY })}
+      onMouseMove={(e) => setPreview({ img, x: e.clientX, y: e.clientY })}
+      onMouseLeave={() => setPreview(null)}
+    >
+      <div className="group relative transition-all duration-500 h-20 overflow-hidden">
+        <div className="flex gap-2 justify-between items-center h-full md:px-8 duration-500">
+          <div>
+            <div className="text-2xl md:text-4xl transition-transform duration-300 md:group-hover:translate-x-10 md:group-hover:opacity-0">
               {number}.<span className="mx-4">{children}</span>
             </div>
             <div className="md:hidden text-xs leading-tighter">{info}</div>
           </div>
-          <div className="icon transition-transform duration-200 z-10 md:group-hover:-translate-x-10 md:group-hover:-rotate-45 rounded-full flex justify-center items-center  group-hover:border-none group-hover:bg-transparent">
+
+          <div className="icon transition-transform duration-200 md:group-hover:-translate-x-10 md:group-hover:-rotate-45 rounded-full flex justify-center items-center z-10">
             <div className="w-5">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                 <path
@@ -25,11 +32,6 @@ function Hover2({ children, number, to, info }) {
               </svg>
             </div>
           </div>
-        </div>
-
-        {/* Info Section for Hover */}
-        <div className="hidden absolute inset-0 text-xl text-white w-[80%]  md:flex items-center ml-4  opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <p className="px-4">{info}</p>
         </div>
       </div>
     </div>
